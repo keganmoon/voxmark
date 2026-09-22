@@ -1,0 +1,18 @@
+[Unit]
+Description=voxmark cross-format (audiobook/ebook) reading progress sync daemon
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/voxmark
+Environment=PYTHONUNBUFFERED=1
+Environment=VOXMARK_DB_URL=postgresql://user:password@localhost:5432/bookorbit
+Environment=VOXMARK_EBOOKS_PATH=/mnt/media/media/books/ebooks
+Environment=VOXMARK_AUDIOBOOKS_PATH=/mnt/media/media/books/audiobooks
+ExecStart=/opt/voxmark/venv/bin/python3 /opt/voxmark/voxmark_daemon.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
