@@ -15,17 +15,12 @@ concurrency:
 
 jobs:
   python-check:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, moonbox]
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: python3.11 -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt
 
       - name: Byte-compile sources (syntax/import sanity check)
-        run: python -m compileall -q .
+        run: . .venv/bin/activate && python -m compileall -q .
